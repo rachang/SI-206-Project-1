@@ -32,7 +32,6 @@ def classSizes(data):
 # Output: Return a list of tuples ordered by
 # ClassName and Class size, e.g 
 # [('Senior', 26), ('Junior', 25), ('Freshman', 21), ('Sophomore', 18)]
-#append, items, itemgetter use .get
 	value_counter = {}
 	for item1 in data:
 		if "Class" in item1:
@@ -47,26 +46,35 @@ def findDay(a):
 # Input: list of dictionaries
 # Output: Return the day of month (1-31) that is the
 # most often seen in the DOB
-	
-
-	pass
-
+	dictofdates = {}
+	for item1 in a:
+		item1 = item1["DOB"].split("/")
+		dictofdates[item1[1]] = dictofdates.get(item1[1], 0) + 1
+	dictofdates = sorted(dictofdates.items(), key=lambda x:-x[1])
+	return(int(dictofdates[0][0]))
 
 # Find the average age (rounded) of the Students
 def findAge(a):
 # Input: list of dictionaries
 # Output: Return the day of month (1-31) that is the
 # most often seen in the DOB
-
-	#Your code here:
-	pass
+	from datetime import datetime
+	list1 = []
+	for date1 in a:
+		b_date = datetime.strptime(date1["DOB"], '%m/%d/%Y')
+		b_date = int("%d" % ((datetime.today() - b_date).days/365))
+		list1.append(b_date)
+	return(round(sum(list1) / len(list1)))
 
 #Similar to mySort, but instead of returning single
 #Student, all of the sorted data is saved to a csv file.
 def mySortPrint(a,col,fileName):
 #Input: list of dictionaries, key to sort by and output file name
 #Output: None
-
+	from operator import itemgetter
+	a = sorted(a, key = itemgetter(col))
+	with open(fileName) as csvfile:
+		writer = csv.DictWriter(csvfile, a)
 	#Your code here:
 	pass
 
@@ -76,7 +84,7 @@ def mySortPrint(a,col,fileName):
 ## DO NOT MODIFY ANY CODE BELOW THIS
 ################################################################
 
-## We have provided simple test() function used in main() to print what each function returns vs. what it's supposed to return.
+## We have provided simple test() function used in main() to print what each afunction returns vs. what it's supposed to return.
 def test(got, expected, pts):
   score = 0;
   if got == expected:
