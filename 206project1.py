@@ -71,10 +71,7 @@ def findAge(a):
 def mySortPrint(a,col,fileName):
 #Input: list of dictionaries, key to sort by and output file name
 #Output: None
-	from operator import itemgetter
-	a = sorted(a, key = itemgetter(col))
-	with open(fileName) as csvfile:
-		writer = csv.DictWriter(csvfile, a)
+
 	#Your code here:
 	pass
 
