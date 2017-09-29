@@ -1,7 +1,7 @@
 import os
-import filecmp
 import csv
 import operator
+import filecmp
 def getData(file):
 #Input: file name
 #Ouput: return a list of dictionary objects where 
@@ -71,7 +71,14 @@ def findAge(a):
 def mySortPrint(a,col,fileName):
 #Input: list of dictionaries, key to sort by and output file name
 #Output: None
-
+	from operator import itemgetter
+	for item1 in a:
+		del(item1["DOB"])
+		del(item1["Class"])
+	a = sorted(a, key = itemgetter(col))
+	with open('results.csv', 'w', newline = "\n") as outfile:
+		writer = csv.DictWriter(outfile, a[0].keys(), lineterminator = '\n')
+		writer.writerows(a)
 	#Your code here:
 	pass
 
